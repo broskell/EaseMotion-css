@@ -1,0 +1,18 @@
+/* ============================================================
+   Duplicate Selector Fix — Verification Stylesheet
+   
+   This stylesheet imports the framework's tooltip component
+   for verification. The actual fix is in components/tooltips.css
+   where two duplicate selector blocks at the bottom of the file
+   need to be merged into their first definitions.
+   
+   See issue: stylelint reports duplicate selectors for
+   .ease-tooltip[data-animation="3d-flip"] (lines 237, 340)
+   .ease-tooltip[data-animation="3d-flip-scale"] (lines 257, 346)
+   
+   Fix: Move the --ease-3d-flip-* custom properties from the
+   duplicate blocks into the first blocks and delete the duplicates.
+   ============================================================ */
+
+/* Import the framework tooltip component to verify */
+@import "../../../components/tooltips.css";

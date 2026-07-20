@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Duplicate Selector Fix Verification</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #0b1121;
+        color: #e2e8f0;
+      }
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #6c63ff;
+    }
+
+    p {
+      color: #64748b;
+      margin-bottom: 2rem;
+      max-width: 480px;
+      text-align: center;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      p {
+        color: #94a3b8;
+      }
+    }
+
+    .demo-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      justify-content: center;
+    }
+
+    .demo-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .demo-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #a78bfa;
+    }
+
+    .trigger-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      background: #6c63ff;
+      color: #ffffff;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>3D Flip Tooltip Verification</h1>
+  <p>
+    This demo verifies that the 3D flip and 3D flip-scale tooltip animations
+    continue to work correctly after the duplicate selector fix in tooltips.css.
+    Hover over the buttons to see the animations.
+  </p>
+
+  <div class="demo-grid">
+    <div class="demo-item">
+      <span class="demo-label">3D Flip (Top)</span>
+      <span
+        class="ease-tooltip trigger-btn"
+        data-tooltip="Tooltip from top!"
+        data-position="top"
+        data-animation="3d-flip"
+      >
+        Hover me ↑
+      </span>
+    </div>
+
+    <div class="demo-item">
+      <span class="demo-label">3D Flip (Bottom)</span>
+      <span
+        class="ease-tooltip trigger-btn"
+        data-tooltip="Tooltip from bottom!"
+        data-position="bottom"
+        data-animation="3d-flip"
+      >
+        Hover me ↓
+      </span>
+    </div>
+
+    <div class="demo-item">
+      <span class="demo-label">3D Flip Scale</span>
+      <span
+        class="ease-tooltip trigger-btn"
+        data-tooltip="Scaling flip!"
+        data-position="top"
+        data-animation="3d-flip-scale"
+      >
+        Hover me ✨
+      </span>
+    </div>
+
+    <div class="demo-item">
+      <span class="demo-label">Marketing Theme</span>
+      <span
+        class="ease-tooltip trigger-btn"
+        data-tooltip="Marketing style!"
+        data-position="top"
+        data-animation="3d-flip"
+        data-theme="marketing"
+      >
+        Hover me 💜
+      </span>
+    </div>
+  </div>
+</body>
+</html>
