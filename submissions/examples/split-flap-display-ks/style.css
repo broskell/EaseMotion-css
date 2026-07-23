@@ -1,0 +1,583 @@
+/* ============================================================
+   Split-Flap Display — Pure CSS Mechanical Flap Board
+   ============================================================
+   An airport-style split-flap character display built with
+   CSS 3D transforms, perspective, and keyframe animations.
+   Zero JavaScript, zero dependencies.
+   ========================================================= */
+
+:root {
+  /* --- Color System --- */
+  --sfd-bg: #f6f8fa;
+  --sfd-bg-dark: #0d1117;
+  --sfd-card-bg: #ffffff;
+  --sfd-card-bg-dark: #161b22;
+  --sfd-card-border: #d0d7de;
+  --sfd-card-border-dark: #30363d;
+  --sfd-text: #1f2328;
+  --sfd-text-dark: #e6edf3;
+  --sfd-text-secondary: #656d76;
+  --sfd-text-secondary-dark: #8b949e;
+
+  /* --- Flap Colors --- */
+  --sfd-flap-bg: #1a1a2e;
+  --sfd-flap-bg-dark: #0d0d1a;
+  --sfd-flap-text: #e8e8e8;
+  --sfd-flap-highlight: #333366;
+  --sfd-flap-divider: #0a0a15;
+  --sfd-flap-border: #2a2a4a;
+  --sfd-flap-shadow: rgba(0, 0, 0, 0.5);
+
+  /* --- Light Flap Variant --- */
+  --sfd-flap-light-bg: #1e1e1e;
+  --sfd-flap-light-text: #ffffff;
+  --sfd-flap-amber: #ff8c00;
+  --sfd-flap-amber-glow: rgba(255, 140, 0, 0.15);
+
+  /* --- Sizing --- */
+  --sfd-unit-width: 56px;
+  --sfd-unit-height: 78px;
+  --sfd-unit-char-size: 2.5rem;
+  --sfd-unit-gap: 8px;
+  --sfd-unit-radius: 6px;
+  --sfd-separator-size: 1.25rem;
+  --sfd-section-padding: 32px;
+  --sfd-card-radius: 8px;
+  --sfd-max-width: 1100px;
+
+  /* --- Typography --- */
+  --sfd-font-family: 'Courier New', 'SF Mono', 'Fira Code', monospace;
+  --sfd-font-size-sm: 0.75rem;
+  --sfd-font-size-base: 0.875rem;
+  --sfd-font-size-lg: 1.5rem;
+  --sfd-font-size-xl: 2rem;
+
+  /* --- Animation --- */
+  --sfd-flip-duration: 500ms;
+  --sfd-flip-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --sfd-perspective: 400px;
+
+  /* --- Z-index --- */
+  --sfd-tooltip-z: 10;
+}
+
+/* ============================================================
+   Dark Mode
+   ========================================================= */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sfd-bg: var(--sfd-bg-dark);
+    --sfd-card-bg: var(--sfd-card-bg-dark);
+    --sfd-card-border: var(--sfd-card-border-dark);
+    --sfd-text: var(--sfd-text-dark);
+    --sfd-text-secondary: var(--sfd-text-secondary-dark);
+  }
+}
+
+/* ============================================================
+   High Contrast Mode
+   ========================================================= */
+@media (prefers-contrast: high) {
+  :root {
+    --sfd-card-border: #000000;
+    --sfd-flap-bg: #000000;
+    --sfd-flap-text: #ffffff;
+    --sfd-flap-border: #ffffff;
+    --sfd-flap-divider: #ffffff;
+  }
+}
+
+@media (prefers-contrast: high) and (prefers-color-scheme: dark) {
+  :root {
+    --sfd-card-border: #ffffff;
+    --sfd-card-bg: #000000;
+    --sfd-text: #ffffff;
+  }
+}
+
+/* ============================================================
+   Forced Colors Mode
+   ========================================================= */
+@media (forced-colors: active) {
+  .sfd-card {
+    border: 2px solid ButtonText;
+  }
+
+  .sfd-unit {
+    border: 1px solid ButtonText;
+    background: Canvas;
+  }
+
+  .sfd-flap {
+    background: Canvas;
+    border: 1px solid ButtonText;
+  }
+
+  .sfd-flap::before {
+    color: ButtonText;
+  }
+
+  .sfd-flap::after {
+    color: ButtonText;
+  }
+
+  .sfd-separator {
+    color: ButtonText;
+  }
+}
+
+/* ============================================================
+   Reduced Motion
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .sfd-flap.is-flipping {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   Base
+   ========================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+  font-size: var(--sfd-font-size-base);
+  line-height: 1.5;
+  color: var(--sfd-text);
+  background: var(--sfd-bg);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+/* ============================================================
+   Section
+   ========================================================= */
+.sfd-section {
+  width: 100%;
+  max-width: var(--sfd-max-width);
+  margin: 0 auto;
+}
+
+.sfd-heading {
+  font-size: var(--sfd-font-size-xl);
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: var(--sfd-text);
+  text-align: center;
+}
+
+/* ============================================================
+   Demo Grid
+   ========================================================= */
+.sfd-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+/* ============================================================
+   Card
+   ========================================================= */
+.sfd-card {
+  background: var(--sfd-card-bg);
+  border: 1px solid var(--sfd-card-border);
+  border-radius: var(--sfd-card-radius);
+  padding: 24px;
+}
+
+.sfd-card-title {
+  font-size: var(--sfd-font-size-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--sfd-text-secondary);
+  margin-bottom: 16px;
+}
+
+/* ============================================================
+   Display Row
+   ========================================================= */
+.sfd-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sfd-unit-gap);
+  flex-wrap: wrap;
+  perspective: var(--sfd-perspective);
+}
+
+/* ============================================================
+   Split-Flap Unit
+   ========================================================= */
+.sfd-unit {
+  position: relative;
+  width: var(--sfd-unit-width);
+  height: var(--sfd-unit-height);
+  background: var(--sfd-flap-bg);
+  border-radius: var(--sfd-unit-radius);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.05),
+    0 2px 6px var(--sfd-flap-shadow);
+  border: 1px solid var(--sfd-flap-border);
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Letter variant */
+.sfd-unit--letter {
+  width: calc(var(--sfd-unit-width) + 8px);
+}
+
+/* Horizontal divider line across the middle of each flap unit */
+.sfd-unit::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  background: var(--sfd-flap-divider);
+  z-index: 3;
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+}
+
+/* Center rivets */
+.sfd-unit::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  background: var(--sfd-flap-divider);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* ============================================================
+   Flap — Upper Half (the flipping piece)
+   ========================================================= */
+.sfd-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transform-origin: bottom center;
+  z-index: 2;
+}
+
+/* Front face — shows data-front character */
+.sfd-flap::before {
+  content: attr(data-front);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sfd-font-family);
+  font-size: var(--sfd-unit-char-size);
+  font-weight: 700;
+  color: var(--sfd-flap-text);
+  line-height: 1;
+  background: var(--sfd-flap-bg);
+  padding-top: 4px;
+  backface-visibility: hidden;
+  transform: rotateX(0deg);
+  border-top-left-radius: var(--sfd-unit-radius);
+  border-top-right-radius: var(--sfd-unit-radius);
+}
+
+/* Back face — shows data-back character (hidden unless flipped) */
+.sfd-flap::after {
+  content: attr(data-back);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sfd-font-family);
+  font-size: var(--sfd-unit-char-size);
+  font-weight: 700;
+  color: var(--sfd-flap-text);
+  line-height: 1;
+  background: var(--sfd-flap-bg);
+  padding-top: 4px;
+  backface-visibility: hidden;
+  transform: rotateX(-180deg);
+  border-top-left-radius: var(--sfd-unit-radius);
+  border-top-right-radius: var(--sfd-unit-radius);
+}
+
+/* ============================================================
+   Flap — Bottom Half (static)
+   ========================================================= */
+.sfd-flap.is-bottom {
+  z-index: 1;
+  pointer-events: none;
+}
+
+.sfd-flap.is-bottom::before {
+  content: attr(data-front);
+  top: 50%;
+  height: 50%;
+  padding-top: 0;
+  padding-bottom: 6px;
+  align-items: flex-end;
+  background: var(--sfd-flap-highlight);
+  border-radius: 0;
+  backface-visibility: visible;
+}
+
+.sfd-flap.is-bottom::after {
+  display: none;
+}
+
+/* ============================================================
+   Flipping Animation
+   ========================================================= */
+.sfd-flap.is-flipping {
+  animation: sf-rotate-top var(--sfd-flip-duration) var(--sfd-flip-easing);
+}
+
+/* Keyframe: rotate the upper flap forward to reveal the back character */
+@keyframes sf-rotate-top {
+  0% {
+    transform: rotateX(0deg);
+  }
+  12% {
+    transform: rotateX(-25deg);
+  }
+  40% {
+    transform: rotateX(-90deg);
+  }
+  50% {
+    transform: rotateX(-90deg);
+  }
+  55% {
+    transform: rotateX(-72deg);
+  }
+  70% {
+    transform: rotateX(-180deg);
+  }
+  85% {
+    transform: rotateX(-170deg);
+  }
+  100% {
+    transform: rotateX(-180deg);
+  }
+}
+
+/* Reset after animation (stays showing back character) */
+.sfd-flap.is-flipping:nth-child(1)  { animation-delay: 0ms; }
+.sfd-unit:nth-child(1) .sfd-flap.is-flipping,
+.sfd-unit:nth-child(1) .sfd-flap.is-flipping { animation-delay: 0ms; }
+.sfd-unit:nth-child(2) .sfd-flap.is-flipping { animation-delay: 400ms; }
+.sfd-unit:nth-child(3) .sfd-flap.is-flipping { animation-delay: 800ms; }
+.sfd-unit:nth-child(4) .sfd-flap.is-flipping { animation-delay: 1200ms; }
+.sfd-unit:nth-child(5) .sfd-flap.is-flipping { animation-delay: 1600ms; }
+.sfd-unit:nth-child(6) .sfd-flap.is-flipping { animation-delay: 2000ms; }
+.sfd-unit:nth-child(7) .sfd-flap.is-flipping { animation-delay: 2400ms; }
+.sfd-unit:nth-child(8) .sfd-flap.is-flipping { animation-delay: 2800ms; }
+.sfd-unit:nth-child(9) .sfd-flap.is-flipping { animation-delay: 3200ms; }
+.sfd-unit:nth-child(10) .sfd-flap.is-flipping { animation-delay: 3600ms; }
+
+/* ============================================================
+   Separator (hours/minutes/seconds labels)
+   ========================================================= */
+.sfd-separator {
+  font-family: var(--sfd-font-family);
+  font-size: var(--sfd-separator-size);
+  font-weight: 700;
+  color: var(--sfd-text-secondary);
+  align-self: flex-end;
+  padding-bottom: 12px;
+  user-select: none;
+}
+
+/* ============================================================
+   Size Variants
+   ========================================================= */
+.sfd-display--sm {
+  --sfd-unit-width: 42px;
+  --sfd-unit-height: 60px;
+  --sfd-unit-char-size: 1.75rem;
+}
+
+.sfd-display--md {
+  --sfd-unit-width: 50px;
+  --sfd-unit-height: 72px;
+  --sfd-unit-char-size: 2.25rem;
+}
+
+/* ============================================================
+   Hover Effect — slight lift on the unit
+   ========================================================= */
+.sfd-unit:hover {
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.05),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+/* ============================================================
+   Focus-visible on the display group
+   ========================================================= */
+.sfd-display:focus-visible {
+  outline: 2px solid #0969da;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.sfd-unit:focus-visible {
+  outline: 2px solid #0969da;
+  outline-offset: 2px;
+  z-index: 5;
+}
+
+/* ============================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 768px) {
+  :root {
+    --sfd-unit-width: 44px;
+    --sfd-unit-height: 64px;
+    --sfd-unit-char-size: 2rem;
+    --sfd-unit-gap: 6px;
+    --sfd-section-padding: 24px;
+  }
+
+  .sfd-demo-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .sfd-display {
+    justify-content: center;
+  }
+
+  .sfd-display--sm {
+    --sfd-unit-width: 34px;
+    --sfd-unit-height: 50px;
+    --sfd-unit-char-size: 1.5rem;
+  }
+
+  .sfd-display--md {
+    --sfd-unit-width: 40px;
+    --sfd-unit-height: 58px;
+    --sfd-unit-char-size: 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --sfd-unit-width: 36px;
+    --sfd-unit-height: 54px;
+    --sfd-unit-char-size: 1.65rem;
+    --sfd-unit-gap: 4px;
+  }
+
+  .sfd-unit--letter {
+    width: calc(var(--sfd-unit-width) + 6px);
+  }
+
+  .sfd-separator {
+    font-size: 1rem;
+    padding-bottom: 10px;
+  }
+
+  .sfd-display--sm {
+    --sfd-unit-width: 28px;
+    --sfd-unit-height: 42px;
+    --sfd-unit-char-size: 1.2rem;
+  }
+
+  .sfd-display--md {
+    --sfd-unit-width: 32px;
+    --sfd-unit-height: 48px;
+    --sfd-unit-char-size: 1.4rem;
+  }
+}
+
+/* ============================================================
+   Print Styles
+   ========================================================= */
+@media print {
+  body {
+    background: #ffffff;
+    color: #000000;
+    padding: 0;
+    font-size: 10pt;
+  }
+
+  .sfd-card {
+    border: 1px solid #cccccc;
+    box-shadow: none;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .sfd-unit {
+    background: #000000 !important;
+    border: 1px solid #000000 !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .sfd-flap::before,
+  .sfd-flap::after {
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .sfd-flap::before {
+    background: #000000 !important;
+  }
+
+  .sfd-flap::after {
+    background: #000000 !important;
+  }
+
+  .sfd-flap.is-bottom::before {
+    background: #222222 !important;
+  }
+
+  .sfd-flap.is-flipping {
+    animation: none !important;
+  }
+
+  .sfd-unit::after {
+    background: #444444 !important;
+  }
+}

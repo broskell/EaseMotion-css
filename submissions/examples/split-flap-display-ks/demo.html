@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Split-Flap Display</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <section class="sfd-section" aria-labelledby="sfd-title">
+      <h1 id="sfd-title" class="sfd-heading">Split-Flap Display</h1>
+
+      <div class="sfd-demo-grid">
+        <!-- Numbers Demo -->
+        <div class="sfd-card">
+          <h2 class="sfd-card-title">Numbers</h2>
+          <div class="sfd-display" role="marquee" aria-label="Display showing numbers 1 2 3 4 5 6 7 8 9 0">
+            <span class="sfd-unit" aria-label="1">
+              <span class="sfd-flap" data-front="1" data-back="7"></span>
+              <span class="sfd-flap is-bottom" data-front="1" data-back="7" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="2">
+              <span class="sfd-flap" data-front="2" data-back="3"></span>
+              <span class="sfd-flap is-bottom" data-front="2" data-back="3" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="3">
+              <span class="sfd-flap is-flipping" data-front="3" data-back="9"></span>
+              <span class="sfd-flap is-bottom" data-front="3" data-back="9" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="4">
+              <span class="sfd-flap" data-front="4" data-back="5"></span>
+              <span class="sfd-flap is-bottom" data-front="4" data-back="5" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="5">
+              <span class="sfd-flap is-flipping" data-front="5" data-back="2"></span>
+              <span class="sfd-flap is-bottom" data-front="5" data-back="2" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="6">
+              <span class="sfd-flap" data-front="6" data-back="0"></span>
+              <span class="sfd-flap is-bottom" data-front="6" data-back="0" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="7">
+              <span class="sfd-flap is-flipping" data-front="7" data-back="1"></span>
+              <span class="sfd-flap is-bottom" data-front="7" data-back="1" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="8">
+              <span class="sfd-flap" data-front="8" data-back="4"></span>
+              <span class="sfd-flap is-bottom" data-front="8" data-back="4" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="9">
+              <span class="sfd-flap" data-front="9" data-back="6"></span>
+              <span class="sfd-flap is-bottom" data-front="9" data-back="6" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="0">
+              <span class="sfd-flap is-flipping" data-front="0" data-back="8"></span>
+              <span class="sfd-flap is-bottom" data-front="0" data-back="8" aria-hidden="true"></span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Countdown Timer Demo -->
+        <div class="sfd-card">
+          <h2 class="sfd-card-title">Countdown Timer</h2>
+          <div class="sfd-display" role="timer" aria-label="Countdown timer showing 1 hour 2 3 minutes 4 5 seconds">
+            <span class="sfd-unit" aria-label="1">
+              <span class="sfd-flap" data-front="1" data-back="0"></span>
+              <span class="sfd-flap is-bottom" data-front="1" data-back="0" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="0">
+              <span class="sfd-flap" data-front="2" data-back="1"></span>
+              <span class="sfd-flap is-bottom" data-front="2" data-back="1" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-separator" aria-hidden="true">h</span>
+            <span class="sfd-unit" aria-label="2">
+              <span class="sfd-flap is-flipping" data-front="2" data-back="3"></span>
+              <span class="sfd-flap is-bottom" data-front="2" data-back="3" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="3">
+              <span class="sfd-flap" data-front="5" data-back="4"></span>
+              <span class="sfd-flap is-bottom" data-front="5" data-back="4" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-separator" aria-hidden="true">m</span>
+            <span class="sfd-unit" aria-label="4">
+              <span class="sfd-flap" data-front="4" data-back="5"></span>
+              <span class="sfd-flap is-bottom" data-front="4" data-back="5" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="5">
+              <span class="sfd-flap is-flipping" data-front="5" data-back="6"></span>
+              <span class="sfd-flap is-bottom" data-front="5" data-back="6" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-separator" aria-hidden="true">s</span>
+          </div>
+        </div>
+
+        <!-- Alphabet Demo -->
+        <div class="sfd-card">
+          <h2 class="sfd-card-title">Letters</h2>
+          <div class="sfd-display" role="marquee" aria-label="Display showing letters H E L L O">
+            <span class="sfd-unit sfd-unit--letter" aria-label="H">
+              <span class="sfd-flap" data-front="H" data-back="N"></span>
+              <span class="sfd-flap is-bottom" data-front="H" data-back="N" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit sfd-unit--letter" aria-label="E">
+              <span class="sfd-flap is-flipping" data-front="E" data-back="A"></span>
+              <span class="sfd-flap is-bottom" data-front="E" data-back="A" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit sfd-unit--letter" aria-label="L">
+              <span class="sfd-flap" data-front="L" data-back="B"></span>
+              <span class="sfd-flap is-bottom" data-front="L" data-back="B" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit sfd-unit--letter" aria-label="L">
+              <span class="sfd-flap is-flipping" data-front="L" data-back="C"></span>
+              <span class="sfd-flap is-bottom" data-front="L" data-back="C" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit sfd-unit--letter" aria-label="O">
+              <span class="sfd-flap" data-front="O" data-back="D"></span>
+              <span class="sfd-flap is-bottom" data-front="O" data-back="D" aria-hidden="true"></span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Small Size Demo -->
+        <div class="sfd-card">
+          <h2 class="sfd-card-title">Scoreboard</h2>
+          <div class="sfd-display sfd-display--sm" role="marquee" aria-label="Score display showing 9 8 7 6 5">
+            <span class="sfd-unit" aria-label="9">
+              <span class="sfd-flap" data-front="9" data-back="8"></span>
+              <span class="sfd-flap is-bottom" data-front="9" data-back="8" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="8">
+              <span class="sfd-flap is-flipping" data-front="8" data-back="7"></span>
+              <span class="sfd-flap is-bottom" data-front="8" data-back="7" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="7">
+              <span class="sfd-flap" data-front="7" data-back="6"></span>
+              <span class="sfd-flap is-bottom" data-front="7" data-back="6" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="6">
+              <span class="sfd-flap is-flipping" data-front="6" data-back="5"></span>
+              <span class="sfd-flap is-bottom" data-front="6" data-back="5" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="5">
+              <span class="sfd-flap" data-front="5" data-back="4"></span>
+              <span class="sfd-flap is-bottom" data-front="5" data-back="4" aria-hidden="true"></span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Animated Sequence -->
+        <div class="sfd-card">
+          <h2 class="sfd-card-title">Departure Board</h2>
+          <div class="sfd-display sfd-display--md" role="marquee" aria-label="Flight status N Y C 1 2 3">
+            <span class="sfd-unit sfd-unit--letter" aria-label="N">
+              <span class="sfd-flap is-flipping" data-front="N" data-back="M"></span>
+              <span class="sfd-flap is-bottom" data-front="N" data-back="M" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit sfd-unit--letter" aria-label="Y">
+              <span class="sfd-flap" data-front="Y" data-back="X"></span>
+              <span class="sfd-flap is-bottom" data-front="Y" data-back="X" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit sfd-unit--letter" aria-label="C">
+              <span class="sfd-flap" data-front="C" data-back="B"></span>
+              <span class="sfd-flap is-bottom" data-front="C" data-back="B" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="1">
+              <span class="sfd-flap is-flipping" data-front="1" data-back="0"></span>
+              <span class="sfd-flap is-bottom" data-front="1" data-back="0" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="2">
+              <span class="sfd-flap" data-front="2" data-back="1"></span>
+              <span class="sfd-flap is-bottom" data-front="2" data-back="1" aria-hidden="true"></span>
+            </span>
+            <span class="sfd-unit" aria-label="3">
+              <span class="sfd-flap is-flipping" data-front="3" data-back="2"></span>
+              <span class="sfd-flap is-bottom" data-front="3" data-back="2" aria-hidden="true"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
