@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll-Driven Layout Morph — EaseMotion CSS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-content">
+      <p class="hero-label" role="doc-subtitle">Modern CSS Technique</p>
+      <h1 class="hero-title">Scroll-Driven<br>Layout Morph</h1>
+      <p class="hero-desc">
+        Cards and containers that change their grid layout, border-radius, gap, and padding
+        as you scroll. Every layout property is controlled by <code>@property</code>-registered
+        custom properties driven by <code>animation-timeline</code>. Zero JavaScript.
+      </p>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">
+      <span class="scroll-hint-text">Scroll to morph</span>
+      <svg class="scroll-hint-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none">
+        <path d="M1 1L10 10L19 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </header>
+
+  <main>
+    <section class="demo-section" aria-labelledby="sec-radius">
+      <div class="section-label" role="doc-subtitle">Technique 1</div>
+      <h2 id="sec-radius">Border Radius<br>That Morphs</h2>
+      <p class="demo-body">
+        Cards that transition from rounded badges to sharp panels as the section enters the viewport.
+        <code>@property --morph-radius</code> registered as <code>&lt;length&gt;</code>
+        enables smooth interpolation of <code>border-radius</code> from 50% to 0.5rem —
+        transforming card shape continuously with scroll position.
+      </p>
+      <div class="morph-grid">
+        <article class="morph-card radius-morph" tabindex="0">
+          <span class="morph-icon">&#9670;</span>
+          <h3>Radius Morph</h3>
+          <p>The card shape changes as you scroll through this section.</p>
+        </article>
+        <article class="morph-card radius-morph" tabindex="0">
+          <span class="morph-icon">&#9670;</span>
+          <h3>Fluid Transition</h3>
+          <p>Every pixel of scroll directly affects the border-radius value.</p>
+        </article>
+        <article class="morph-card radius-morph" tabindex="0">
+          <span class="morph-icon">&#9670;</span>
+          <h3>@property Powered</h3>
+          <p>Without @property, border-radius cannot animate between percentage and length.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="demo-section" aria-labelledby="sec-gap">
+      <div class="section-label" role="doc-subtitle">Technique 2</div>
+      <h2 id="sec-gap">Grid Gap<br>That Collapses</h2>
+      <p class="demo-body">
+        Cards that start widely spaced and collapse together as you scroll.
+        <code>@property --morph-gap</code> controls the grid <code>gap</code> property,
+        animating from 3rem to 0.5rem. The cards visually group together in response
+        to the user's scrolling behavior.
+      </p>
+      <div class="morph-grid gap-morph">
+        <article class="morph-card" tabindex="0">
+          <span class="morph-icon">&#9670;</span>
+          <h3>Wide Start</h3>
+          <p>Cards begin with generous spacing at the top of the viewport.</p>
+        </article>
+        <article class="morph-card" tabindex="0">
+          <span class="morph-icon">&#9670;</span>
+          <h3>Gradual Close</h3>
+          <p>The gap shrinks continuously as you scroll further down.</p>
+        </article>
+        <article class="morph-card" tabindex="0">
+          <span class="morph-icon">&#9670;</span>
+          <h3>Tight Group</h3>
+          <p>Cards cluster together for a dense layout at the bottom.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="demo-section" aria-labelledby="sec-padding">
+      <div class="section-label" role="doc-subtitle">Technique 3</div>
+      <h2 id="sec-padding">Padding<br>That Expands</h2>
+      <p class="demo-body">
+        Cards that grow in padding as you scroll — from compact cards to
+        spacious content containers. <code>@property --morph-padding</code>
+        animates from 0.75rem to 2.5rem, giving the cards room to breathe
+        as the user engages deeper with the page.
+      </p>
+      <div class="morph-grid">
+        <article class="morph-card padding-morph" tabindex="0">
+          <span class="morph-icon">&#9670;</span>
+          <h3>Compact Start</h3>
+          <p>Cards begin tight and condensed at the section entrance.</p>
+        </article>
+        <article class="morph-card padding-morph" tabindex="0">
+          <span class="morph-icon">&#9670;</span>
+          <h3>Breathing Room</h3>
+          <p>Padding grows alongside scroll progress — more space for content.</p>
+        </article>
+        <article class="morph-card padding-morph" tabindex="0">
+          <span class="morph-icon">&#9670;</span>
+          <h3>Spacious Focus</h3>
+          <p>Maximum padding for maximum readability at the section bottom.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="demo-section" aria-labelledby="sec-grid">
+      <div class="section-label" role="doc-subtitle">Technique 4</div>
+      <h2 id="sec-grid">Grid Columns<br>That Reorganize</h2>
+      <p class="demo-body">
+        A grid that changes its column structure as the user scrolls —
+        from a single column to three columns. <code>@property --morph-columns</code>
+        controls <code>grid-template-columns</code> with <code>repeat(var(--count), 1fr)</code>,
+        transitioning smoothly through intermediate states.
+      </p>
+      <div class="morph-grid columns-morph">
+        <article class="morph-card" tabindex="0">
+          <span class="morph-icon">&#9670;</span>
+          <h3>One Column</h3>
+          <p>Starts as a single-column list that stacks vertically.</p>
+        </article>
+        <article class="morph-card" tabindex="0">
+          <span class="morph-icon">&#9670;</span>
+          <h3>Two Column</h3>
+          <p>The grid splits into pairs as the section enters view.</p>
+        </article>
+        <article class="morph-card" tabindex="0">
+          <span class="morph-icon">&#9670;</span>
+          <h3>Three Column</h3>
+          <p>Full three-column layout emerges at the section center.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="demo-section" aria-labelledby="sec-api">
+      <h2 id="sec-api">CSS APIs Used</h2>
+      <div class="api-table-wrapper" tabindex="0">
+        <table class="api-table">
+          <caption>The modern CSS primitives powering scroll-driven layout morphing</caption>
+          <thead>
+            <tr>
+              <th scope="col">API</th>
+              <th scope="col">Role</th>
+              <th scope="col">Support</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>@property</code></td>
+              <td>Registers typed custom properties — enables smooth interpolation of border-radius, gap, padding, and grid columns</td>
+              <td>Chrome 85+, Safari 16.4+, Firefox 128+</td>
+            </tr>
+            <tr>
+              <td><code>animation-timeline: view()</code></td>
+              <td>Links layout property animation to element visibility within the scroll container</td>
+              <td>Chrome 115+, Safari 18+</td>
+            </tr>
+            <tr>
+              <td><code>animation-range</code></td>
+              <td>Controls the scroll range where layout morphing is active</td>
+              <td>Chrome 115+, Safari 18+</td>
+            </tr>
+            <tr>
+              <td><code>border-radius</code></td>
+              <td>Animates between different shapes — circle to rounded rect</td>
+              <td>All modern browsers</td>
+            </tr>
+            <tr>
+              <td><code>grid-template-columns</code> + <code>gap</code></td>
+              <td>Grid structure that reorganizes based on scroll-driven property values</td>
+              <td>All modern browsers</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="api-note">
+        In browsers without <code>@property</code> or <code>animation-timeline</code> support,
+        static fallback values provide a fully functional layout at all screen sizes.
+      </p>
+    </section>
+  </main>
+
+  <footer class="demo-footer" role="contentinfo">
+    <p>EaseMotion CSS — Scroll-Driven Layout Morph Submission</p>
+    <p>Built with semantic HTML, CSS Grid, and zero JavaScript</p>
+  </footer>
+
+</body>
+</html>
